@@ -11,7 +11,7 @@
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
-    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="/css/app.css">
     <style>
         #map {
             height: 400px;
@@ -20,6 +20,7 @@
     </style>
     <script  type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqnR5H7ELH5lGt1X7qNLg3ghnhyRZuer8&callback=initMap" async defer></script>
     <script>
+        var csvArray = [];
         var map;
 
         function initMap() {
@@ -129,17 +130,54 @@ var map;
 
         // Puedes agregar marcadores, polígonos u otras capas en el mapa según tus necesidades
     }
+    function LoadFile() {
+                    // URL del archivo CSV
+                    var csvUrl = 'real_v0.csv';
+                    
+                    // Leer el archivo CSV
+                    $.get(csvUrl, function(data) {
 
+
+                        var rows = data.split('\n');
+                        // Obtener los encabezados de las columnas
+                        var headers = rows[0].split(',');
+                        // Crear un arreglo para almacenar los datos del CSV
+                        
+                        // Recorrer las filas del CSV, comenzando desde la segunda fila (índice 1)
+                        for (var i = 1; i < rows.length; i++) {
+                        var row = rows[i];
+                        // Dividir la fila en valores separados por comas
+                        var values = row.split(',');
+                        // Crear un objeto para almacenar los datos de la fila
+                        var rowData = {};
+
+                        // Recorrer los valores de la fila y asignarlos a las propiedades correspondientes
+                        for (var j = 0; j < headers.length; j++) {
+                            var header = headers[j];
+                            var value = values[j];
+
+                            // Asignar el valor al nombre de la columna correspondiente
+                            rowData[header] = value;
+                        }
+
+                        // Agregar el objeto de datos de la fila al arreglo
+                        csvArray.push(rowData);
+                        }
+                        // console.log(csvArray);
+                    });
+                }
     initMap();
+    LoadFile();
 });
 
     </script>
+    
 </head>
 <body>
     <!-- Barra de navegación y contenido principal -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Mi Proyecto</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#">EcoRiskGuard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -162,7 +200,7 @@ var map;
         <div class="row">
             <div class="col-md-12">
                 <!-- Bloque de filtro -->
-                <form>
+                
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -188,14 +226,14 @@ var map;
                         </div>
                         <div class="col-md-3">
                             <div class="form-group" style="vertical-align: middle;">
-                                <button type="submit" class="btn btn-primary">Buscar</button>
+                                <button  onclick="filtrarDatos('Caribbean')" class="btn btn-primary">Buscar</button>
                             </div>
                         </div>
                     </div>
                     
                     
                     
-                </form>
+                
             </div>
             <div class="col-md-12">
                 <div class="row">
@@ -205,32 +243,7 @@ var map;
 
                     </div>
 
-                    <!-- <div class="col-lg-2">
-                        Personas Afectadas
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <br/>
-                       Total USD Daños
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <br/>
-                      Indemnización Pagadas x siniestro USD:
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <br/>
-                       Perdidas Aseguradas USD:
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <br/>
-                       Perdidas Aseguradas USD:
-                      <div class="progress">
-                        <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>-->
+                    
                     <div class="col-lg-12">
                         <div class="container">
                             <ul class="nav nav-tabs" id="myTabs">
@@ -246,14 +259,14 @@ var map;
                                 <li class="nav-item">
                                     <a class="nav-link" id="tab4" data-bs-toggle="tab" href="#chart4">Perdidas Aseguradas USD</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" id="tab5" data-bs-toggle="tab" href="#chart5">Perdidas Aseguradas USD</a>
-                                </li>
+                                </li> -->
                             </ul>
                     
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="chart1">
-                                    <canvas id="Chart02"></canvas>
+                                    <canvas id="Chart01"></canvas>
                                 </div>
                                 <div class="tab-pane fade" id="chart2">
                                     <canvas id="Chart02"></canvas>
@@ -264,31 +277,90 @@ var map;
                                 <div class="tab-pane fade" id="chart4">
                                     <canvas id="Chart04"></canvas>
                                 </div>
-                                <div class="tab-pane fade" id="chart5">
+                                <!-- <div class="tab-pane fade" id="chart5">
                                     <canvas id="Chart05"></canvas>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
                 </div> 
-                <div class="container">
-                   
-                </div>
+                
             
                 <script>
+
+function obtenerColumnaYear(datosFiltrados, filtro) {
+    var datosFiltradosPorFil = datosFiltrados.filter(function (data) {
+    return data.variable === filtro;
+  });
+  // Obtener un arreglo de la columna "Year" de los datos filtrados
+  var columnaYear = datosFiltradosPorFil.map(function (data) {
+    return data.Year.substring(0,4);
+  });
+   // Devolver el arreglo de la columna "Year"
+   return columnaYear.sort();
+}
+  function obtenerColumnaValue(datosFiltrados, filtro) {    
+    var datosFiltradosPorFil = datosFiltrados.filter(function (data) {
+    return data.variable === filtro;
+  });
+  debugger;
+  // Obtener un arreglo de la columna "Year" de los datos filtrados
+  var columnaYear = datosFiltradosPorFil.map(function (data) {
+    return data.value;
+  });
+  }
+ 
+function filtrarDatos(region) {
+  // Filtrar los datos del arreglo csvArray por región y año
+  var datosFiltrados = csvArray.filter(function (data) {
+    return data.Region === region;
+  });
+
+                    var Years = obtenerColumnaYear(datosFiltrados,'No Injured');
+                    debugger;
+                    var variable = obtenerColumnaValue(datosFiltrados,'No Injured');
                     //cargar datos del csv
                     // Datos del gráfico
                     var data01 = {
-                        labels: ['2021', '2022', '2023', '2024', '2025', '2035'],
+                        labels: Years,
                         datasets: [{
-                            label: 'Ventas',
-                            data: [12, 129, 33, 225, 212, 223],
-                            fill: false,
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            tension: 0.1
+                            label: 'Personas Afectadas',
+                            data: variable, 
+                            fill: false, borderColor: 'rgba(75, 192, 192, 1)',  tension: 0.1
                         }]
                     };
-            
+                    var data02 = {
+                        labels: ['1', '2', '3', '4', '5', '6'],
+                        datasets: [{
+                            label: 'Total USD Daños',
+                            data: [12, 129, 33, 225, 212, 223], 
+                            fill: false, borderColor: 'rgba(75, 192, 192, 1)',  tension: 0.1
+                        }]
+                    };
+                    var data03 = {
+                        labels: ['2021', '2022', '2023', '2024', '2025', '2035'],
+                        datasets: [{
+                            label: 'Indemnización Pagadas x siniestro USD',
+                            data: [12, 129, 33, 225, 212, 223], 
+                            fill: false, borderColor: 'rgba(75, 192, 192, 1)',  tension: 0.1
+                        }]
+                    };
+                    var data04 = {
+                        labels: ['2021', '2022', '2023', '2024', '2025', '2035'],
+                        datasets: [{
+                            label: 'Perdidas Aseguradas USD',
+                            data: [12, 129, 33, 225, 212, 223], 
+                            fill: false, borderColor: 'rgba(75, 192, 192, 1)',  tension: 0.1
+                        }]
+                    };
+                    // var data05 = {
+                    //     labels: ['2021', '2022', '2023', '2024', '2025', '2035'],
+                    //     datasets: [{
+                    //         label: 'Personas Afectadas',
+                    //         data: [12, 129, 33, 225, 212, 223], 
+                    //         fill: false, borderColor: 'rgba(75, 192, 192, 1)',  tension: 0.1
+                    //     }]
+                    // };
                     // Opciones del gráfico
                     var options = {
                         scales: {
@@ -304,6 +376,25 @@ var map;
                         data: data01,
                         options: options
                     });
+                    var lineChart02 = new Chart(document.getElementById('Chart02'), {
+                        type: 'line',
+                        data: data02,
+                        options: options
+                    });
+                    var lineChart03 = new Chart(document.getElementById('Chart03'), {
+                        type: 'line',
+                        data: data03,
+                        options: options
+                    });
+                    var lineChart04 = new Chart(document.getElementById('Chart04'), {
+                        type: 'line',
+                        data: data04,
+                        options: options
+                    });
+  // Devolver los datos filtrados
+//   return datosFiltrados;
+}
+
                 </script>
             
                 <!-- Bootstrap JS -->
@@ -311,43 +402,27 @@ var map;
             
                 <!-- MDBootstrap JS -->
                 <script src="https://cdn.jsdelivr.net/npm/mdb@6.1.0/dist/js/mdb.min.js"></script>
-            </body>
+           
                 <ul id="lista"></ul>
                 <script>
-                    // Función para agregar un item a la lista
-                    function agregarItem(item) {
-                      var listItem = $('<li>').text(item);
-                      $('#lista').append(listItem);
-                    }
+                    // // Función para agregar un item a la lista
+                    // function agregarItem(item) {
+                    //   var listItem = $('<li>').text(item);
+                    //   $('#lista').append(listItem);
+                    // }
                 
-                    // URL del archivo CSV
-                    var csvUrl = 'aapredictions_v0.csv';
-                
-                    // Leer el archivo CSV
-                    $.get(csvUrl, function(data) {
-                      // Dividir el contenido en líneas
-                      var lines = data.split('\n');
-                
-                      // Recorrer cada línea del archivo CSV
-                      lines.forEach(function(line) {
-                        // Dividir la línea en columnas
-                        var columns = line.split(',');
-                
-                        // Agregar el valor de cada columna como un item en la lista
-                        columns.forEach(function(column) {
-                          agregarItem(column);
-                        });
-                      });
-                    });
+                    
                   </script>
                 
 
             </div>
         </div>
+        
     </div>
+    <footer>
+        <p><span class="icon"></span>  </p>
+        <p>ElevenEleven</p>
+    </footer>
 </body>
-<footer>
-    <p><span class="icon"></span>  </p>
-    <p>ElevenEleven</p>
-</footer>
+
 </html>
