@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proyecto Bootstrap</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+        var map;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 37.7749, lng: -122.4194}, // Coordenadas del centro del mapa
+                zoom: 8 // Nivel de zoom inicial
+            });
+
+            var drawingManager = new google.maps.drawing.DrawingManager({
+                drawingMode: google.maps.drawing.OverlayType.POLYGON, // Modo de dibujo de polígono
+                drawingControl: true, // Mostrar herramientas de dibujo
+                drawingControlOptions: {
+                    position: google.maps.ControlPosition.TOP_CENTER, // Posición de las herramientas de dibujo
+                    drawingModes: [google.maps.drawing.OverlayType.POLYGON] // Solo permitir dibujar polígonos
+                }
+            });
+            drawingManager.setMap(map);
+
+            google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+                if (event.type === google.maps.drawing.OverlayType.POLYGON) {
+                    var selectedRegion = event.overlay.getPath(); // Obtener los puntos del polígono seleccionado
+                    // Hacer algo con los puntos de la región seleccionada
+                    console.log(selectedRegion.getArray());
+                }
+            });
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+    var continentes = {
+        "Africa": {
+            "Norte": {lat: 26.3351, lng: 17.2283, zoom: 4},
+            "Oeste": {lat: 9.9446, lng: -5.8222, zoom: 4},
+            "Este": {lat: 7.1881, lng: 38.1222, zoom: 4},
+            "Sur": {lat: -23.5795, lng: 26.4946, zoom: 4},
+            "Central": {lat: 3.848,
+                lng: 17.9315, zoom: 5}
+        },
+        "America": {
+            "Norte": {lat: 45.8558, lng: -101.0145, zoom: 3},
+            "Centro": {lat: 16.5304, lng: -92.3271, zoom: 3},
+            "Caribe": {lat: 15.7921, lng: -68.5260, zoom: 3},
+            "Sudamerica": {lat: -16.4090, lng: -58.4297, zoom: 3}
+        },
+        "Asia": {
+            "Este": {lat: 36.4259, lng: 106.2749, zoom: 4},
+            "Sur": {lat: 19.6632, lng: 82.8933, zoom: 4},
+            "Oeste": {lat: 33.7208, lng: 64.7815, zoom: 4},
+            "Central": {lat: 27.6223, lng: 86.3802, zoom: 4},
+            "Sureste": {lat: 10.7767, lng: 106.7004, zoom: 4}
+        },
+        "Europe": {
+            "Oeste": {lat: 49.0069, lng: -7.9286, zoom: 4},
+            "Este": {lat: 54.5259, lng: 25.2555, zoom: 4},
+            "Central": {lat: 50.4939, lng: 14.1362, zoom: 4},
+            "Norte": {lat: 55.1694, lng: 8.6746, zoom: 4},
+            "Sur": {lat: 41.9028, lng: 12.4964, zoom: 4}
+        },
+        "Oceania": {
+            "Australia": {lat: -24.3693, lng: 133.7751, zoom: 4},
+            "Melanesia": {lat: -7.8517, lng: 143.6426, zoom: 4},
+            "Micronesia": {lat: 6.8877, lng: 158.2150, zoom: 4},
+            "Polinesia": {lat: -14.3064, lng: -170.6950, zoom: 4}
+        }
+    };
+
+    var continenteSelect = $("#continente");
+    var regionSelect = $("#region");
+
+    $.each(continentes, function(cont, regiones) {
+        continenteSelect.append('<option value="' + cont + '">' + cont + '</option>');
+    });
+
+    continenteSelect.change(function() {
+        var selectedCont = $(this).val();
+        var regiones = continentes[selectedCont];
+        regionSelect.empty();
+
+        $.each(regiones, function(reg, data) {
+            regionSelect.append('<option value="' + reg + '">' + reg + '</option>');
+        });
+
+        // Centrar y aplicar zoom en la región seleccionada
+        var selectedReg = regionSelect.val();
+        var regionData = regiones[selectedReg];
+        map.setCenter(regionData);
+        map.setZoom(regionData.zoom);
+    });
+
+    regionSelect.change(function() {
+        var selectedCont = continenteSelect.val();
+        var regiones = continentes[selectedCont];
+        var selectedReg = $(this).val();
+        var regionData = regiones[selectedReg];
+
+        // Centrar y aplicar zoom en la región seleccionada
+        map.setCenter(regionData);
+        map.setZoom(regionData.zoom);
+    });
+
+    var map;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 2,
+            center: {lat: 0, lng: 0}
+        });
+
+        // Puedes agregar marcadores, polígonos u otras capas en el mapa según tus necesidades
+    }
+
+    initMap();
+});
+    </script>
+</head>
+<body>
+    <!-- Barra de navegación y contenido principal -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Mi Proyecto</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Acerca</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Bloque de filtro -->
+                <form>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="continente">Continente:</label>
+                                <select class="form-control" id="continente">
+                                    <!-- Las opciones se llenarán dinámicamente con jQuery -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="region">Región:</label>
+                                <select class="form-control" id="region">
+                                    <!-- Las opciones se llenarán dinámicamente con jQuery -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="anio">Año a predecir:</label>
+                                <input type="text" class="form-control" id="anio">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Filtrar</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </form>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-lg-10">
+
+                        <div id="map"></div>
+
+                    </div>
+                    <div class="col-lg-2">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <br/>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                </div>
+                
+                
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
