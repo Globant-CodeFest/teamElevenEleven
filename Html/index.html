@@ -3,11 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Proyecto Bootstrap</title>
+    <title>Proyecto Eleven Eleven</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         #map {
             height: 400px;
@@ -15,7 +14,6 @@
         }
     </style>
     <script  type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqnR5H7ELH5lGt1X7qNLg3ghnhyRZuer8&callback=initMap" async defer></script>
-    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?API-key=AIzaSyDqnR5H7ELH5lGt1X7qNLg3ghnhyRZuer8v=3.exp"></script> -->
     <script>
         var map;
 
@@ -83,7 +81,7 @@
 };
 
 
-var continenteSelect = $("#continente");
+    var continenteSelect = $("#continente");
 var regionSelect = $("#region");
 
 $.each(continentes, function(cont, regiones) {
@@ -96,7 +94,7 @@ continenteSelect.change(function() {
   regionSelect.empty();
 
   $.each(regiones, function(reg, data) {
-    regionSelect.append('<option value="' + reg + '">' + data + '</option>');
+    regionSelect.append('<option value="' + reg + '">' + data.nombre + '</option>');
   });
 
   // Código para seleccionar una región automáticamente
@@ -184,8 +182,8 @@ var map;
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Filtrar</button>
+                            <div class="form-group" style="vertical-align: middle;">
+                                <button type="submit" class="btn btn-primary">Buscar</button>
                             </div>
                         </div>
                     </div>
@@ -220,7 +218,35 @@ var map;
                       </div>
                     </div>
                 </div>
+                <ul id="lista"></ul>
+                <script>
+                    // Función para agregar un item a la lista
+                    function agregarItem(item) {
+                      var listItem = $('<li>').text(item);
+                      $('#lista').append(listItem);
+                    }
                 
+                    // URL del archivo CSV
+                    var csvUrl = 'predictions_v0.csv';
+                
+                    // Leer el archivo CSV
+                    $.get(csvUrl, function(data) {
+                      // Dividir el contenido en líneas
+                      var lines = data.split('\n');
+                
+                      // Recorrer cada línea del archivo CSV
+                      lines.forEach(function(line) {
+                        debugger;
+                        // Dividir la línea en columnas
+                        var columns = line.split(',');
+                
+                        // Agregar el valor de cada columna como un item en la lista
+                        columns.forEach(function(column) {
+                          agregarItem(column);
+                        });
+                      });
+                    });
+                  </script>
                 
 
             </div>

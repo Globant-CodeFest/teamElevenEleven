@@ -1,0 +1,19 @@
+{
+  "name": "teameleveneleven",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Globant-CodeFest/teamElevenEleven.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Globant-CodeFest/teamElevenEleven/issues"
+  },
+  "homepage": "https://github.com/Globant-CodeFest/teamElevenEleven#readme"
+}
