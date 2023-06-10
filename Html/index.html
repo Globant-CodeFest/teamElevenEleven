@@ -132,7 +132,7 @@ var map;
     }
     function LoadFile() {
                     // URL del archivo CSV
-                    var csvUrl = 'real_v0.csv';
+                    var csvUrl = 'pjoined_v0.csv';
                     
                     // Leer el archivo CSV
                     $.get(csvUrl, function(data) {
@@ -192,6 +192,9 @@ var map;
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contacto</a>
                 </li>
+                <li>
+                    <a href="http://localhost:3000/src/index.html" id="btnConectar" class="btn btn-primary" onclick="openPopupWindow(event)">Conectar a la Blockchain</a>         
+                </li>
             </ul>
         </div>
     </nav>
@@ -212,7 +215,7 @@ var map;
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="region">Región:</label>
+                                <label  for="region">Región:</label>
                                 <select class="form-control" id="region">
                                     <!-- Las opciones se llenarán dinámicamente con jQuery -->
                                 </select>
@@ -226,7 +229,7 @@ var map;
                         </div>
                         <div class="col-md-3">
                             <div class="form-group" style="vertical-align: middle;">
-                                <button  onclick="filtrarDatos('Caribbean')" class="btn btn-primary">Buscar</button>
+                                <button  onclick="filtrarDatos(region.value)" class="btn btn-primary">Buscar</button>
                             </div>
                         </div>
                     </div>
@@ -301,13 +304,13 @@ function obtenerColumnaYear(datosFiltrados, filtro) {
 }
   function obtenerColumnaValue(datosFiltrados, filtro) {    
     var datosFiltradosPorFil = datosFiltrados.filter(function (data) {
-    return data.variable === filtro;
+    return data.variable == filtro;
   });
-  debugger;
   // Obtener un arreglo de la columna "Year" de los datos filtrados
   var columnaYear = datosFiltradosPorFil.map(function (data) {
     return data.value;
   });
+  return columnaYear;
   }
  
 function filtrarDatos(region) {
@@ -316,9 +319,9 @@ function filtrarDatos(region) {
     return data.Region === region;
   });
 
-                    var Years = obtenerColumnaYear(datosFiltrados,'No Injured');
+                    var Years = obtenerColumnaYear(datosFiltrados,'ttl_adj_usd_damages');
+                    var variable = obtenerColumnaValue(datosFiltrados,'ttl_adj_usd_damages');
                     debugger;
-                    var variable = obtenerColumnaValue(datosFiltrados,'No Injured');
                     //cargar datos del csv
                     // Datos del gráfico
                     var data01 = {
@@ -365,7 +368,8 @@ function filtrarDatos(region) {
                     var options = {
                         scales: {
                             y: {
-                                beginAtZero: true
+                                
+                                type: 'logarithmic'
                             }
                         }
                     };
