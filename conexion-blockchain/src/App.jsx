@@ -12,7 +12,7 @@ export default function App() {
     left: "50%",
     transform: "translate(-50%,-50%)"
   };
-
+  window.opener.postMessage('popupClosed', '*');
   const [show, setShow] = useState(false);
 
   return (
@@ -25,7 +25,7 @@ export default function App() {
         <p>Bienvenid@ a CAMBIOS CLIMATICOS (by ELEVEN ELEVEN)</p>
         <br />
         <div>
-          <Button color='success' onClick={() => setShow(!show)}>{show ? 'Desconectar' : 'Seleccionar'} Wallet</Button>
+          <Button class="btn btn-primary"  onClick={() => setShow(!show)}>{show ? 'Desconectar' : 'Seleccionar'} Wallet</Button>
         </div>
         <br />
         <img src={image} alt="Imagen" style={{ width: '300px', height: 'auto' }} /> {/* Cambiar el tamaño de la imagen aquí */}
