@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Proyecto Eleven Eleven</title>
+    <title>Proyecto Bootstrap</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <style>
         #map {
             height: 400px;
             width: 100%;
         }
     </style>
-    <script  type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqnR5H7ELH5lGt1X7qNLg3ghnhyRZuer8&callback=initMap" async defer></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script>
         var map;
 
@@ -44,78 +44,79 @@
         }
     </script>
     <script>
-    $(document).ready(function() {
-        var continentes = {
-    "Africa": {
-        "North Africa": {lat: 26.3351, lng: 17.2283, zoom: 5, nombre: "África del Norte"},
-        "West Africa": {lat: 9.9446, lng: -5.8222, zoom: 5, nombre: "África Occidental"},
-        "East Africa": {lat: 7.1881, lng: 38.1222, zoom: 5, nombre: "África Oriental"},
-        "Southern Africa": {lat: -23.5795, lng: 26.4946, zoom: 5, nombre: "África Austral"},
-        "Central Africa": {lat: 3.848, lng: 17.9315, zoom: 5, nombre: "África Central"}
-    },
-    "America": {
-        "North America": {lat: 45.8558, lng: -101.0145, zoom: 4, nombre: "América del Norte"},
-        "Central America": {lat: 16.5304, lng: -92.3271, zoom: 4, nombre: "América Central"},
-        "Caribbean": {lat: 15.7921, lng: -68.5260, zoom: 4, nombre: "Caribe"},
-        "South America": {lat: -16.4090, lng: -58.4297, zoom: 4, nombre: "Sudamérica"}
-    },
-    "Asia": {
-        "East Asia": {lat: 36.4259, lng: 106.2749, zoom: 4, nombre: "Asia Oriental"},
-        "South Asia": {lat: 19.6632, lng: 82.8933, zoom: 4, nombre: "Asia Meridional"},
-        "West Asia": {lat: 33.7208, lng: 64.7815, zoom: 4, nombre: "Asia Occidental"},
-        "Central Asia": {lat: 27.6223, lng: 86.3802, zoom: 4, nombre: "Asia Central"},
-        "Southeast Asia": {lat: 10.7767, lng: 106.7004, zoom: 4, nombre: "Sudeste Asiático"}
-    },
-    "Europe": {
-        "Western Europe": {lat: 49.0069, lng: -7.9286, zoom: 4, nombre: "Europa Occidental"},
-        "Eastern Europe": {lat: 54.5259, lng: 25.2555, zoom: 4, nombre: "Europa Oriental"},
-        "Central Europe": {lat: 50.4939, lng: 14.1362, zoom: 4, nombre: "Europa Central"},
-        "Northern Europe": {lat: 55.1694, lng: 8.6746, zoom: 4, nombre: "Europa Septentrional"},
-        "Southern Europe": {lat: 41.9028, lng: 12.4964, zoom: 4, nombre: "Europa Meridional"}
-    },
-    "Oceania": {
-        "Australia": {lat: -24.3693, lng: 133.7751, zoom: 4, nombre: "Australia"},
-        "Melanesia": {lat: -7.8517, lng: 143.6426, zoom: 4, nombre: "Melanesia"},
-        "Micronesia": {lat: 6.8877, lng: 158.2150, zoom: 4, nombre: "Micronesia"},
-        "Polynesia": {lat: -14.3064, lng: -170.6950, zoom: 4, nombre: "Polinesia"}
-    }
-};
-
+        $(document).ready(function() {
+    var continentes = {
+        "Africa": {
+            "Norte": {lat: 26.3351, lng: 17.2283, zoom: 4},
+            "Oeste": {lat: 9.9446, lng: -5.8222, zoom: 4},
+            "Este": {lat: 7.1881, lng: 38.1222, zoom: 4},
+            "Sur": {lat: -23.5795, lng: 26.4946, zoom: 4},
+            "Central": {lat: 3.848,
+                lng: 17.9315, zoom: 5}
+        },
+        "America": {
+            "Norte": {lat: 45.8558, lng: -101.0145, zoom: 3},
+            "Centro": {lat: 16.5304, lng: -92.3271, zoom: 3},
+            "Caribe": {lat: 15.7921, lng: -68.5260, zoom: 3},
+            "Sudamerica": {lat: -16.4090, lng: -58.4297, zoom: 3}
+        },
+        "Asia": {
+            "Este": {lat: 36.4259, lng: 106.2749, zoom: 4},
+            "Sur": {lat: 19.6632, lng: 82.8933, zoom: 4},
+            "Oeste": {lat: 33.7208, lng: 64.7815, zoom: 4},
+            "Central": {lat: 27.6223, lng: 86.3802, zoom: 4},
+            "Sureste": {lat: 10.7767, lng: 106.7004, zoom: 4}
+        },
+        "Europe": {
+            "Oeste": {lat: 49.0069, lng: -7.9286, zoom: 4},
+            "Este": {lat: 54.5259, lng: 25.2555, zoom: 4},
+            "Central": {lat: 50.4939, lng: 14.1362, zoom: 4},
+            "Norte": {lat: 55.1694, lng: 8.6746, zoom: 4},
+            "Sur": {lat: 41.9028, lng: 12.4964, zoom: 4}
+        },
+        "Oceania": {
+            "Australia": {lat: -24.3693, lng: 133.7751, zoom: 4},
+            "Melanesia": {lat: -7.8517, lng: 143.6426, zoom: 4},
+            "Micronesia": {lat: 6.8877, lng: 158.2150, zoom: 4},
+            "Polinesia": {lat: -14.3064, lng: -170.6950, zoom: 4}
+        }
+    };
 
     var continenteSelect = $("#continente");
-var regionSelect = $("#region");
+    var regionSelect = $("#region");
 
-$.each(continentes, function(cont, regiones) {
-  continenteSelect.append('<option value="' + cont + '">' + cont + '</option>');
-});
+    $.each(continentes, function(cont, regiones) {
+        continenteSelect.append('<option value="' + cont + '">' + cont + '</option>');
+    });
 
-continenteSelect.change(function() {
-  var selectedCont = $(this).val();
-  var regiones = continentes[selectedCont];
-  regionSelect.empty();
+    continenteSelect.change(function() {
+        var selectedCont = $(this).val();
+        var regiones = continentes[selectedCont];
+        regionSelect.empty();
 
-  $.each(regiones, function(reg, data) {
-    regionSelect.append('<option value="' + reg + '">' + data.nombre + '</option>');
-  });
+        $.each(regiones, function(reg, data) {
+            regionSelect.append('<option value="' + reg + '">' + reg + '</option>');
+        });
 
-  // Código para seleccionar una región automáticamente
-  var selectedRegion = Object.keys(regiones)[0];
-  regionSelect.val(selectedRegion).change();
-});
+        // Centrar y aplicar zoom en la región seleccionada
+        var selectedReg = regionSelect.val();
+        var regionData = regiones[selectedReg];
+        map.setCenter(regionData);
+        map.setZoom(regionData.zoom);
+    });
 
-regionSelect.change(function() {
-  var selectedRegion = $(this).val();
-  var selectedCont = continenteSelect.val();
-  
-  // Código para resaltar la región seleccionada en el mapa
-  var lat = continentes[selectedCont][selectedRegion].lat;
-  var lng = continentes[selectedCont][selectedRegion].lng;
-  var zoom = continentes[selectedCont][selectedRegion].zoom;
-  map.setCenter(new google.maps.LatLng(lat, lng));
-  map.setZoom(zoom);
-});
+    regionSelect.change(function() {
+        var selectedCont = continenteSelect.val();
+        var regiones = continentes[selectedCont];
+        var selectedReg = $(this).val();
+        var regionData = regiones[selectedReg];
 
-var map;
+        // Centrar y aplicar zoom en la región seleccionada
+        map.setCenter(regionData);
+        map.setZoom(regionData.zoom);
+    });
+
+    var map;
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -128,13 +129,23 @@ var map;
 
     initMap();
 });
-
-    </script>
+    </script>   
+    <script>
+        function openPopupWindow(event) {
+          event.preventDefault();
+          const width = 600;
+          const height = 600;
+          const left = (window.innerWidth - width) / 2;
+          const top = (window.innerHeight - height) / 2;
+          const options = `width=${width},height=${height},left=${left},top=${top}`;
+          window.open(event.target.href, 'PopupWindow', options);
+        }
+        </script>
 </head>
 <body>
     <!-- Barra de navegación y contenido principal -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">EcoRiskGuard</a>
+        <a class="navbar-brand" href="#">Mi Proyecto</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -149,6 +160,9 @@ var map;
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contacto</a>
+                </li>
+                <li>
+                    <a href="http://localhost:3000/src/index.html" class="btn btn-primary" onclick="openPopupWindow(event)">Conectar a la Blockchain</a>         
                 </li>
             </ul>
         </div>
@@ -183,8 +197,8 @@ var map;
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="form-group" style="vertical-align: middle;">
-                                <button type="submit" class="btn btn-primary">Buscar</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Filtrar</button>
                             </div>
                         </div>
                     </div>
@@ -219,43 +233,11 @@ var map;
                       </div>
                     </div>
                 </div>
-                <ul id="lista"></ul>
-                <script>
-                    // Función para agregar un item a la lista
-                    function agregarItem(item) {
-                      var listItem = $('<li>').text(item);
-                      $('#lista').append(listItem);
-                    }
                 
-                    // URL del archivo CSV
-                    var csvUrl = 'predictions_v0.csv';
-                
-                    // Leer el archivo CSV
-                    $.get(csvUrl, function(data) {
-                      // Dividir el contenido en líneas
-                      var lines = data.split('\n');
-                
-                      // Recorrer cada línea del archivo CSV
-                      lines.forEach(function(line) {
-                        debugger;
-                        // Dividir la línea en columnas
-                        var columns = line.split(',');
-                
-                        // Agregar el valor de cada columna como un item en la lista
-                        columns.forEach(function(column) {
-                          agregarItem(column);
-                        });
-                      });
-                    });
-                  </script>
                 
 
             </div>
         </div>
     </div>
 </body>
-<footer>
-    <p><span class="icon"></span>  </p>
-    <p>ElevenEleven</p>
-</footer>
 </html>
